@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\PaypayTransaction;
+use Inertia\Inertia;
 
 class PaypayTransactionController extends Controller
 {
@@ -17,6 +18,7 @@ class PaypayTransactionController extends Controller
         $file = $request->file('csv');
         $data = array_map('str_getcsv', file($file->getRealPath()));
         $header = array_shift($data);
+        $header = array_map(fn($h) => preg_replace('/^\x{FEFF}/u', '', $h), $header);
         $jsonData = array_map(fn($row) => array_combine($header, $row), $data);
         $jsonData = array_filter($jsonData, function ($row) {
             return array_filter($row, fn($value) => trim($value) !== '') !== [];
@@ -28,7 +30,7 @@ class PaypayTransactionController extends Controller
             if (isset($jsonData[$i]['取引番号'])) {
                 PaypayTransaction::create([
                     'user_id' => auth()->id(),
-                    'transaction_date' => $jsonData[$i]["\u{FEFF}取引日"] ?? null,
+                    'transaction_date' => $jsonData[$i]["取引日"] ?? null,
                     'deposit_amount' => $jsonData[$i]['入金金額（円）'] ?? null,
                     'withdrawal_amount' => $jsonData[$i]['出金金額（円）'] ?? null,
                     'overseas_withdrawal_amount' => $jsonData[$i]['海外出金金額'] ?? null,

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Inertia } from '@inertiajs/inertia';
 import { Button } from '@/components/ui/button';
+import { Inertia } from '@inertiajs/inertia';
+import React, { useState } from 'react';
 
 const CsvUpload: React.FC = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -10,7 +10,7 @@ const CsvUpload: React.FC = () => {
         if (!file) return;
 
         const formData = new FormData();
-        formData.append("csv", file);
+        formData.append('csv', file);
         Inertia.post('/upload-csv', formData, { forceFormData: true });
     };
 
@@ -23,13 +23,17 @@ const CsvUpload: React.FC = () => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <input type="file" accept='.csv' onChange={handleFileChange}/>
-                <Button size="lg" className='px-20' type='submit'>
+                <input
+                    type="file"
+                    accept=".csv"
+                    onChange={handleFileChange}
+                />
+                <Button size="lg" className="px-20" type="submit">
                     インポート
                 </Button>
             </form>
         </div>
     );
-}
+};
 
 export default CsvUpload;

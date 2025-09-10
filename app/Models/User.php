@@ -49,6 +49,6 @@ class User extends Authenticatable
 
     public function paypayTransactions(): HasMany
     {
-        return $this->hasMany(PaypayTranscation::class);
+        return $this->hasMany(PaypayTransaction::class);
     }
 }

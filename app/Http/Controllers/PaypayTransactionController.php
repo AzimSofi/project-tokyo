@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\PaypayTranscation;
+use App\Models\PaypayTransaction;
 
-class PaypayTranscationController extends Controller
+class PaypayTransactionController extends Controller
 {
     public function uploadCsv(Request $request)
     {
@@ -26,7 +26,7 @@ class PaypayTranscationController extends Controller
         // dd($jsonData);
         for ($i = 0; $i < count($jsonData); $i++) {
             if (isset($jsonData[$i]['取引番号'])) {
-                PaypayTranscation::create([
+                PaypayTransaction::create([
                     'user_id' => auth()->id(),
                     'transaction_date' => $jsonData[$i]["\u{FEFF}取引日"] ?? null,
                     'deposit_amount' => $jsonData[$i]['入金金額（円）'] ?? null,

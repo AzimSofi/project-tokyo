@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
+            $table->string('transaction_date')->nullable()->comment('取引日');
             $table->string('deposit_amount')->nullable()->comment('入金額 (円)');
             $table->string('withdrawal_amount')->nullable()->comment('出金額 (円)');
             $table->string('country_of_use')->nullable()->comment('利用国');

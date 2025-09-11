@@ -12,7 +12,7 @@ class PaypayTransactionController extends Controller
     public function uploadCsv(Request $request)
     {
         $request->validate([
-            'csv' => 'required|file|mimes:csv',
+            'csv' => 'required|file|mimetypes:text/csv,text/plain|ends_with:.csv',
         ]);
 
         $file = $request->file('csv');

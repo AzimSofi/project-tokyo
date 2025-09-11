@@ -8,16 +8,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\PaypayTransaction;
 use Exception;
-use Inertia\Inertia;
 
 class PaypayTransactionController extends Controller
 {
     public function uploadCsv(Request $request)
     {
         $request->validate([
-            'csv' => 'required|file|mimetypes:text/csv,text/plain|ends_with:.csv',
+            'csv' => 'required|file|mimes:csv,txt',
         ]);
-
         $file = $request->file('csv');
         $fileLines = file($file->getRealPath());
         if (!$fileLines) {

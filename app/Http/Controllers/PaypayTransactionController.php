@@ -25,7 +25,6 @@ class PaypayTransactionController extends Controller
         });
         $jsonData = array_values($jsonData);
 
-        // dd($jsonData);
         for ($i = 0; $i < count($jsonData); $i++) {
             if (isset($jsonData[$i]['取引番号'])) {
                 PaypayTransaction::create([
@@ -47,8 +46,6 @@ class PaypayTransactionController extends Controller
             } else {
                 continue;
             }
-
-            // return response()->json($jsonData);
         }
         return Inertia('dashboard');
     }

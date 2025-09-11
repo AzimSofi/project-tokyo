@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Inertia } from '@inertiajs/inertia';
+import { router } from '@inertiajs/react';
 import React, { useState } from 'react';
 
 const CsvUpload: React.FC = () => {
@@ -11,7 +11,7 @@ const CsvUpload: React.FC = () => {
 
         const formData = new FormData();
         formData.append('csv', file);
-        Inertia.post('/upload-csv', formData, { forceFormData: true });
+        router.post('/upload-csv', formData, { forceFormData: true });
     };
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {

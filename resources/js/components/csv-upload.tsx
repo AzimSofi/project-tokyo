@@ -27,7 +27,7 @@ const CsvUpload: React.FC = () => {
             onSuccess: () => {
                 setSuccess('ファイルが正常にアップロードされました');
             },
-            onError: (errors) => {
+            onError: () => {
                 setError('ファイルのアップロード中にエラーが発生しました');
             },
             onFinish: () => {
@@ -59,7 +59,7 @@ const CsvUpload: React.FC = () => {
             )}
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col items-center gap-4">
-                    <input type="file" accept=".csv" onChange={handleFileChange} className='text-sm' />
+                    <input type="file" accept=".csv" onChange={handleFileChange} className="text-sm" />
                     <Button size="lg" className="px-20" type="submit" disabled={loading}>
                         {loading ? 'アップロード中...' : 'インポート'}
                     </Button>

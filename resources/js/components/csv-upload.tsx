@@ -58,10 +58,12 @@ const CsvUpload: React.FC = () => {
                 </Alert>
             )}
             <form onSubmit={handleSubmit}>
-                <input type="file" accept=".csv" onChange={handleFileChange} />
-                <Button size="lg" className="px-20" type="submit" disabled={loading}>
-                    {loading ? 'アップロード中...' : 'インポート'}
-                </Button>
+                <div className="flex flex-col items-center gap-4">
+                    <input type="file" accept=".csv" onChange={handleFileChange} className='text-sm' />
+                    <Button size="lg" className="px-20" type="submit" disabled={loading}>
+                        {loading ? 'アップロード中...' : 'インポート'}
+                    </Button>
+                </div>
             </form>
         </div>
     );

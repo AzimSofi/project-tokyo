@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('transaction_details')->nullable()->comment('取引内容');
             $table->string('payment_method')->nullable()->comment('取引方法');
             $table->string('transaction_number')->comment('取引番号');
-            $table->unique(['transaction_number', 'transaction_details'], 'unique_transaction_number_transaction_details');
+            $table->unique(['transaction_number', 'transaction_details'], 'unique_txn_num_details');
 
             $table->string('exchange_rate')->nullable()->comment('変換レート (円)');
             $table->string('payment_category')->nullable()->comment('支払い区分');

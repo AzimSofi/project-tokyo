@@ -19,7 +19,12 @@ class PaypayTransactionController extends Controller
         ]);
 
         $file = $request->file('csv');
-        $data = array_map('str_getcsv', file($file->getRealPath()));
+        $fileLines = file($file->getRealPath());
+        if (!$fileLines) {
+            Log::error('CSVファイルの読み込みに失敗しました。');
+            return back()->withErrors(['csv' => 'CSVファイルの読み込みに失敗しました。']);
+        }
+        $data = array_map('str_getcsv', $fileLines);
         $header = array_shift($data);
         $header = array_map(fn($h) => preg_replace('/^\x{FEFF}/u', '', $h), $header);
         $jsonData = array_map(fn($row) => array_combine($header, $row), $data);
@@ -30,7 +35,8 @@ class PaypayTransactionController extends Controller
 
         try {
             DB::transaction(function () use ($jsonData) {
-                for ($i = 0; $i < count($jsonData); $i++) {
+                $jsonDataCount = count($jsonData);
+                for ($i = 0; $i < $jsonDataCount; $i++) {
                     if (!isset($jsonData[$i]['取引番号'])) {
                         continue;
                     }

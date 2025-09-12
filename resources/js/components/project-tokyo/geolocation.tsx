@@ -21,21 +21,21 @@ export default function GeoLocation() {
             const latitude: number = position.coords.latitude;
             const longitude: number = position.coords.longitude;
 
-            status ? status.textContent = '' : null;
+            if (status) status.textContent = '';
             if (mapLink) {
             mapLink.href = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`;
             mapLink.textContent = `緯度: ${latitude}°、経度: ${longitude}°`;
             }
         }
         const error = (): void => {
-            status ? status.textContent = 'Unable to retrieve your location' : null;
+            if (status) status.textContent = '位置情報を取得できません';
         }
 
-        // 学んだこと：　ブラウザのグローバルオブジェクト、ブラウザ環境で自動的に利用できる
+        // 学んだこと：ブラウザのグローバルオブジェクト、ブラウザ環境で自動的に利用できる
         if (!navigator.geolocation) {
-            status ? status.textContent = 'このブラウザーは位置情報に対応していません' : null;
+            if (status) status.textContent = 'このブラウザーは位置情報に対応していません';
         } else {
-            status ? status.textContent = '位置情報を取得中…' : null;
+            if (status) status.textContent = '位置情報を取得中…';
             navigator.geolocation.getCurrentPosition(success, error);
         }
     }

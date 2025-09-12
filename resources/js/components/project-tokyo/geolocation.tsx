@@ -1,5 +1,6 @@
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
+import { useState, useEffect } from 'react';
 
 interface GeoPosition {
     coords: {
@@ -9,9 +10,11 @@ interface GeoPosition {
 }
 
 export default function GeoLocation() {
+    const [status, setStatus] = useState<HTMLParagraphElement | null>(null);
+    const [mapLink, setMapLink] = useState<HTMLAnchorElement | null>(null);
+
     function geoFindMe() {
-        const status: HTMLParagraphElement | null = document.querySelector('#status');
-        const mapLink: HTMLAnchorElement | null = document.querySelector('#map-link');
+
         if (mapLink) {
             mapLink.href = '';
             mapLink.textContent = '';
@@ -40,17 +43,23 @@ export default function GeoLocation() {
         }
     }
 
-    const findMeButton = document.querySelector('#find-me');
-    if (findMeButton) {
-        findMeButton.addEventListener('click', geoFindMe);
-    }
+    useEffect(() => {
+        const statusElement: HTMLParagraphElement | null = document.querySelector('#status');
+        if (statusElement) setStatus(statusElement);
+
+        const mapLinkElement: HTMLAnchorElement | null = document.querySelector('#map-link');
+        if (mapLinkElement) setMapLink(mapLinkElement);
+
+        const findMeButton: HTMLButtonElement | null = document.querySelector('#find-me');
+        if (findMeButton) findMeButton.addEventListener('click', geoFindMe);
+    }, []);
 
     return (
         <div className="row-gap-4 absolute inset-0 flex flex-col items-center justify-center">
             <Button id="find-me" type="submit" size="for-dashboard">
                 現在の位置を表示
             </Button>
-            <Alert variant="default" className="mb-4 w-100">
+            <Alert variant="default" className="mb-4 w-96">
                 <AlertTitle id="status"></AlertTitle>
                 <AlertDescription id="map-link"></AlertDescription>
             </Alert>

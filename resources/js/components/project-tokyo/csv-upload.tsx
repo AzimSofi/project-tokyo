@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { router } from '@inertiajs/react';
 import React, { useState } from 'react';
-import { Alert, AlertDescription, AlertTitle } from './ui/alert';
+import { Alert, AlertDescription, AlertTitle } from '../ui/alert';
 
 const CsvUpload: React.FC = () => {
     const [file, setFile] = useState<File | null>(null);
@@ -60,7 +60,7 @@ const CsvUpload: React.FC = () => {
             <form onSubmit={handleSubmit}>
                 <div className="flex flex-col items-center gap-4">
                     <input type="file" accept=".csv" onChange={handleFileChange} className="text-sm" />
-                    <Button size="lg" className="px-20" type="submit" disabled={loading}>
+                    <Button size="for-dashboard" type="submit" disabled={loading}>
                         {loading ? 'アップロード中...' : 'インポート'}
                     </Button>
                 </div>

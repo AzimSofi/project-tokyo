@@ -2,7 +2,11 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
 
-export default function GeoLocation() {
+type GeoLocationProps = {
+    onLocationChange: (location: { latitude: number; longitude: number } | null) => void;
+};
+
+export default function GeoLocation({ onLocationChange }: GeoLocationProps) {
     const [statusText, setStatusText] = useState<string>('');
     const [mapLinkHref, setMapLinkHref] = useState<string>('');
     const [mapLinkText, setMapLinkText] = useState<string>('');
@@ -18,6 +22,7 @@ export default function GeoLocation() {
             setStatusText('');
             setMapLinkHref(`https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`);
             setMapLinkText(`緯度: ${latitude}°、経度: ${longitude}°`);
+            onLocationChange({ latitude, longitude });
         }
         const error = (): void => {
             setStatusText('位置情報を取得できません');
@@ -38,11 +43,16 @@ export default function GeoLocation() {
                 現在の位置を表示
             </Button>
             <Alert variant="default" className="mb-4 w-96">
-                <AlertTitle id="status">{statusText}</AlertTitle>
-                <AlertDescription id="map-link">
+                <AlertTitle id="status" hidden={!statusText}>{statusText}</AlertTitle>
+                <AlertDescription id="map-link" >
                     {mapLinkHref ? (
-                        <a href={mapLinkHref} target="_blank" rel="noopener noreferrer">
-                            {mapLinkText}
+                        <a href={mapLinkHref} target="_blank" rel="noopener noreferrer" className='flex items-center'>
+                            <div className='text-center'>
+                                {mapLinkText.split('、')[0]}
+                            </div>
+                            <div className='text-center'>
+                                {mapLinkText.split('、')[1]}
+                            </div>
                         </a>
                     ) : null}
                 </AlertDescription>

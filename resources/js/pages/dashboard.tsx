@@ -1,10 +1,12 @@
 import CsvUpload from '@/components/project-tokyo/csv-upload';
 import Geolocation from '@/components/project-tokyo/geolocation';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
+import { Button } from '@/components/ui/button';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -14,6 +16,8 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Dashboard() {
+    const [locationText, setLocationText] = useState<string>('');
+
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Dashboard" />
@@ -25,7 +29,12 @@ export default function Dashboard() {
                         </div>
                     </div>
                     <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                        <Geolocation />
+                        <Geolocation onLocationChange={location => setLocationText(location ? `${location.latitude}, ${location.longitude}` : '')}/>
+                        <Button className="absolute bottom-4 right-4" size="lg" variant="save"
+                            onClick={() => {router.post('/save-location', { location: locationText })}}
+                            >
+                            保存
+                        </Button>
                     </div>
                     <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
                         <PlaceholderPattern className="absolute inset-0 size-full stroke-neutral-900/20 dark:stroke-neutral-100/20" />

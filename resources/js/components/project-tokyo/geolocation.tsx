@@ -2,13 +2,6 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { useState, useEffect } from 'react';
 
-interface GeoPosition {
-    coords: {
-    latitude: number;
-    longitude: number;
-    };
-}
-
 export default function GeoLocation() {
     const [statusText, setStatusText] = useState<string>('');
     const [mapLinkHref, setMapLinkHref] = useState<string>('');
@@ -18,7 +11,7 @@ export default function GeoLocation() {
         setMapLinkHref('');
         setMapLinkText('');
 
-        const success = (position: GeoPosition): void => {
+        const success = (position: GeolocationPosition): void => {
             const latitude: number = position.coords.latitude;
             const longitude: number = position.coords.longitude;
 
@@ -40,7 +33,7 @@ export default function GeoLocation() {
     }
 
     return (
-        <div className="row-gap-4 absolute inset-0 flex flex-col items-center justify-center">
+        <div className="gap-y-4 absolute inset-0 flex flex-col items-center justify-center">
             <Button id="find-me" type="button" size="for-dashboard" onClick={geoFindMe}>
                 現在の位置を表示
             </Button>

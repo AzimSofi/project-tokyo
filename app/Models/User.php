@@ -51,4 +51,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(PaypayTransaction::class);
     }
+
+    public function locations(): HasMany
+    {
+        return $this->hasMany(Location::class);
+    }
 }

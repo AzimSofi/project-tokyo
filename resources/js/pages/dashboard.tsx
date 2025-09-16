@@ -31,7 +31,13 @@ export default function Dashboard() {
                     <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
                         <Geolocation onLocationChange={location => setLocationText(location ? `${location.latitude}, ${location.longitude}` : '')}/>
                         <Button className="absolute bottom-4 right-4" size="lg" variant="save"
-                            onClick={() => {router.post('/save-location', { location: locationText })}}
+                            onClick={async () => { // 関数として渡さないと、すぐ実行されてしまうとonClickはPromiseを返せないのでasyncにする
+                                try {
+                                    await router.post('/save-location', { location: locationText })
+                                } catch (error) {
+                                    console.error('位置情報の保存中にエラーが発生しました:', error)
+                                }
+                            }}
                             >
                             保存
                         </Button>

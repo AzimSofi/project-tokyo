@@ -42,16 +42,16 @@ export default function GeoLocation({ onLocationChange }: GeoLocationProps) {
             <Button id="find-me" type="button" size="for-dashboard" onClick={geoFindMe}>
                 現在の位置を表示
             </Button>
-            <Alert variant="default" className="mb-4 w-96">
+            <Alert variant="default" className="mb-4 w-96" hidden={!mapLinkText}>
                 <AlertTitle id="status" hidden={!statusText}>{statusText}</AlertTitle>
-                <AlertDescription id="map-link" >
+                <AlertDescription id="map-link">
                     {mapLinkHref ? (
                         <a href={mapLinkHref} target="_blank" rel="noopener noreferrer" className='flex items-center'>
                             <div className='text-center'>
-                                {mapLinkText.split('、')[0]}
+                                {mapLinkText.split('、')[0] ?? ''}
                             </div>
                             <div className='text-center'>
-                                {mapLinkText.split('、')[1]}
+                                {mapLinkText.split('、')[1] ?? ''}
                             </div>
                         </a>
                     ) : null}

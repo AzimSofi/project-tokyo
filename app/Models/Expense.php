@@ -15,4 +15,9 @@ class Expense extends Model
         'food_items_bought_in_bulk',
         'non_food_items_bought_in_bulk',
     ];
+
+    protected $casts = [
+        'food_items_bought_in_bulk' => 'array',
+        'non_food_items_bought_in_bulk' => 'array',
+    ];
 }

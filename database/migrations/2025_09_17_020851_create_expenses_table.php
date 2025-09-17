@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id')->comment('ユーザーID');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->date('date')->comment('日付');
             $table->string('total_amount')->comment('円');
             $table->json('food_items_bought_in_bulk')->nullable()->comment('name(商品名)、price(価格)、quantity(数量)、unit(単位)');

@@ -21,7 +21,7 @@ class ExpenseSeeder extends Seeder
                 ['name' => '納豆', 'price' => 93, 'quantity' => 3, 'unit' => '個'],
                 ['name' => '玉子', 'price' => 397, 'quantity' => 10, 'unit' => '個'],
                 ['name' => 'レタス', 'price' => 198, 'quantity' => 0.5, 'unit' => '玉'],
-                ['name' => '緑茶', 'price' => 128, 'quantity' => 2, 'unit' => 'リットル'],
+                ['name' => '緑茶', 'price' => 128, 'quantity' => 2, 'unit' => 'ℓ'],
             ]),
             'non_food_items' => json_encode([
                 ['name' => 'AC充電器', 'price' => 1870, 'quantity' => 1, 'unit' => '個'],

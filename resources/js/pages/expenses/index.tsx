@@ -1,5 +1,7 @@
 import AppLayout from '@/layouts/app-layout';
 import { Head, usePage } from '@inertiajs/react';
+import { MiniTable } from './mini-table';
+import { Button } from '@/components/ui/button';
 
 interface Expense {
     id: number;
@@ -29,22 +31,28 @@ export default function ExpensesIndex() {
     return (
         <AppLayout breadcrumbs={[{ title: 'Expenses', href: '/expenses' }]}>
             <Head title="Expenses Index Page" />
+            <Button
+                className='ml-4'
+                variant={'default'}
+                size={'for-dashboard'}
+                onClick={() => window.location.reload()}>
+                追加
+            </Button>
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-gray-50 dark:bg-gray-800">
                             <tr>
-                                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">ID</th>
-                                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">日付</th>
-                                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">合計金額</th>
-                                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">食品まとめ買い</th>
-                                <th className="px-4 py-2 text-left text-xs font-medium text-gray-500">非食品まとめ買い</th>
+                                <th className="px-4 py-2 text-left  font-medium text-gray-500">ID</th>
+                                <th className="px-4 py-2 text-left  font-medium text-gray-500">日付</th>
+                                <th className="px-4 py-2 text-left  font-medium text-gray-500">合計金額</th>
+                                <th className="px-4 py-2 text-left  font-medium text-gray-500">食品まとめ買い</th>
+                                <th className="px-4 py-2 text-left  font-medium text-gray-500">非食品まとめ買い</th>
                             </tr>
                         </thead>
                         <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200">
                             {expenses && expenses.length > 0 ? (
                                 expenses.map((expense: Expense) => {
-                                    // 文字列ならパース
                                     const foodItems = typeof expense.food_items_bought_in_bulk === 'string'
                                         ? JSON.parse(expense.food_items_bought_in_bulk)
                                         : expense.food_items_bought_in_bulk;
@@ -60,52 +68,14 @@ export default function ExpensesIndex() {
                                             <td className="px-4 py-2">{expense.total_amount} 円</td>
                                             <td className="px-4 py-2">
                                                 {Array.isArray(foodItems) && foodItems.length > 0 ? (
-                                                    <table className="min-w-full border border-gray-200 text-xs">
-                                                        <thead>
-                                                            <tr>
-                                                                <th className="px-1 py-1 border text-xs font-medium text-gray-500">商品名</th>
-                                                                <th className="px-1 py-1 border text-xs font-medium text-gray-500">価格</th>
-                                                                <th className="px-1 py-1 border text-xs font-medium text-gray-500">数量</th>
-                                                                <th className="px-1 py-1 border text-xs font-medium text-gray-500">単位</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {foodItems.map((item: FoodItemBoughtInBulk, idx: number) => (
-                                                                <tr key={idx}>
-                                                                    <td className="px-1 py-1 border text-center">{item.name}</td>
-                                                                    <td className="px-1 py-1 border text-center">{item.price}円</td>
-                                                                    <td className="px-1 py-1 border text-center">{item.quantity}</td>
-                                                                    <td className="px-1 py-1 border text-center">{item.unit}</td>
-                                                                </tr>
-                                                            ))}
-                                                        </tbody>
-                                                    </table>
+                                                    <MiniTable Items={foodItems} />
                                                 ) : (
                                                     ''
                                                 )}
                                             </td>
                                             <td className="px-4 py-2">
                                                 {Array.isArray(nonFoodItems) && nonFoodItems.length > 0 ? (
-                                                    <table className="min-w-full border border-gray-200 text-xs">
-                                                        <thead>
-                                                            <tr>
-                                                                <th className="px-1 py-1 border text-xs font-medium text-gray-500">商品名</th>
-                                                                <th className="px-1 py-1 border text-xs font-medium text-gray-500">価格</th>
-                                                                <th className="px-1 py-1 border text-xs font-medium text-gray-500">数量</th>
-                                                                <th className="px-1 py-1 border text-xs font-medium text-gray-500">単位</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            {nonFoodItems.map((item: NonFoodItem, idx: number) => (
-                                                                <tr key={idx}>
-                                                                    <td className="px-1 py-1 border text-center">{item.name}</td>
-                                                                    <td className="px-1 py-1 border text-center">{item.price}円</td>
-                                                                    <td className="px-1 py-1 border text-center">{item.quantity}</td>
-                                                                    <td className="px-1 py-1 border text-center">{item.unit}</td>
-                                                                </tr>
-                                                            ))}
-                                                        </tbody>
-                                                    </table>
+                                                    <MiniTable Items={nonFoodItems} />
                                                 ) : (
                                                     ''
                                                 )}
